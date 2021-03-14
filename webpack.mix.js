@@ -19,3 +19,9 @@ mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'pub
 .react()
 .vue()
 .sass('resources/scss/style.scss', 'public/css');
+
+// Merge all styles into one
+mix.styles([
+    'public/css/app.css',
+    'public/css/style.css'
+], 'public/css/all.css');
