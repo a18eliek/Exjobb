@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <GChart
-      type="ColumnChart"
-      :data="chartData"
-      :options="chartOptions"
-    />
-  </div>
+	<div>
+		<GChart
+			type="ColumnChart"
+			:data="chartData"
+			:options="chartOptions"
+		/>
+	</div>
 </template>
 <script>
 
@@ -13,7 +13,7 @@ const default_layout = "default";
 import { GChart } from 'vue-google-charts'
 
 export default {
-  computed: {},
+  name: "Chart",
    components: {
     GChart
   },

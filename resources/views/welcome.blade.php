@@ -51,12 +51,12 @@
                         <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
                             <div class="flex items-center">
                                 <i class="fab fa-vuejs fa-4x" style="color: white"></i>
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laracasts.com" class="text-gray-900 dark:text-white">Vue.js Test output</a></div>
+                                <div class="ml-4 text-lg leading-7 font-semibold"><div class="text-gray-900 dark:text-white">Vue.js Test output</div></div>
                             </div>
 
                             <div class="ml-12">
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm text-center" id="vuejs-test">
-                                    <hello></hello>
+                                    <i class="fas fa-spinner fa-spin"></i>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                         <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
                             <div class="ml-12">
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm text-center" id="vuejs-chart">
-                                    <chart></chart>
+                                    <i class="fas fa-spinner fa-spin"></i>
                                 </div>
                             </div>
                         </div>
