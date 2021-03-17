@@ -28,7 +28,7 @@
                 </div>
             @endif
 
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-8xl mx-auto sm:px-6 lg:px-8 w-9/12">
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
                     <h1 class="text-gray-900 dark:text-white text-3xl">Exjobb - a18eliek</h1>
                 </div>
@@ -63,7 +63,7 @@
 
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2">
-                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
+                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0">
                             <div class="ml-12">
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm text-center" id="react-chart">
                                     <i class="fas fa-spinner fa-spin"></i>
