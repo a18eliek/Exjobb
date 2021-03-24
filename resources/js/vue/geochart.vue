@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<GChart
-			:settings="{ packages: ['geochart'], mapsApiKey: 'AIzaSyCXjs9irYKjcvNAAzF83CAUCxuIdi9aYqk' }"
+			:settings="{ packages: ['geochart'], mapsApiKey: 'AIzaSyBfh9ZdqldzTDvpFGegSufW9f-sxbWJ-94' }"
 			type="GeoChart"
 			:data="chartData"
 			:options="chartOptions"
