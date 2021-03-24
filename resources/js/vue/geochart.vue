@@ -22,11 +22,13 @@ export default {
 	},
 	methods: {
 		onChartReady (chart, google) {
+			helpers.timerStart("onChartReady", "geochart.vue" );
 			$.ajax({
 				type: 'get',
 				url: 'http://127.0.0.1:8000/data',
 				dataType:"json",
 				success: function(response, status, jqXHR) {
+					helpers.timerStart("onChartReady->success", "geochart.vue" );
 					/* Create the charts after operation succeeded */
 					var data = new google.visualization.DataTable(response);
 
@@ -41,8 +43,10 @@ export default {
 					};
 
 					chart.draw(data, options);
+					helpers.timerEnd("onChartReady->success", "geochart.vue" );
 				}
 			});
+			helpers.timerEnd("onChartReady", "geochart.vue" );
 		}
 	},
 	data () {
