@@ -3835,6 +3835,73 @@ var default_layout = "default";
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/vue/geochart.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/vue/geochart.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue_google_charts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-google-charts */ "./node_modules/vue-google-charts/index.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var default_layout = "default";
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "GeoChart",
+  components: {
+    GChart: vue_google_charts__WEBPACK_IMPORTED_MODULE_0__.GChart
+  },
+  methods: {
+    onChartReady: function onChartReady(chart, google) {
+      $.ajax({
+        type: 'get',
+        url: 'http://127.0.0.1:8000/data',
+        dataType: "json",
+        success: function success(response, status, jqXHR) {
+          /* Create the charts after operation succeeded */
+          var data = new google.visualization.DataTable(response);
+          data.addColumn('string', 'Country');
+          data.addColumn('number', 'Count');
+          var dataPoints = Object.keys(response).map(function (key) {
+            return [key, response[key]];
+          });
+          data.addRows(dataPoints);
+          var options = {
+            title: 'GeoChart Test'
+          };
+          chart.draw(data, options);
+        }
+      });
+    }
+  },
+  data: function data() {
+    return {
+      chartData: [['Country', 'Count']],
+      chartOptions: {
+        chart: {
+          title: 'GeoChart Test'
+        }
+      }
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/vue/hello.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/vue/hello.vue?vue&type=script&lang=js& ***!
@@ -3920,6 +3987,8 @@ __webpack_require__(/*! ./react/hello.tsx */ "./resources/js/react/hello.tsx");
 
 __webpack_require__(/*! ./react/chart.tsx */ "./resources/js/react/chart.tsx");
 
+__webpack_require__(/*! ./react/geochart.tsx */ "./resources/js/react/geochart.tsx");
+
 /***/ }),
 
 /***/ "./resources/js/react/chart.tsx":
@@ -3994,6 +4063,78 @@ var ReactChart = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
+/***/ "./resources/js/react/geochart.tsx":
+/*!*****************************************!*\
+  !*** ./resources/js/react/geochart.tsx ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ReactGeoChart)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_google_charts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-google-charts */ "./node_modules/react-google-charts/dist/index.esm.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+var ReactGeoChart = /*#__PURE__*/function (_React$Component) {
+  _inherits(ReactGeoChart, _React$Component);
+
+  var _super = _createSuper(ReactGeoChart);
+
+  function ReactGeoChart() {
+    _classCallCheck(this, ReactGeoChart);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(ReactGeoChart, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_google_charts__WEBPACK_IMPORTED_MODULE_2__.Chart, {
+        chartType: "GeoChart",
+        data: [['Country', 'Popularity'], ['Germany', 200], ['United States', 300], ['Brazil', 400], ['Canada', 500], ['France', 600], ['RU', 700]],
+        legendToggle: true
+      });
+    }
+  }]);
+
+  return ReactGeoChart;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+
+(0,react_dom__WEBPACK_IMPORTED_MODULE_1__.render)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(ReactGeoChart, {}), document.querySelector("#react-geochart"));
+
+/***/ }),
+
 /***/ "./resources/js/react/hello.tsx":
 /*!**************************************!*\
   !*** ./resources/js/react/hello.tsx ***!
@@ -4064,28 +4205,37 @@ react_dom__WEBPACK_IMPORTED_MODULE_1__.render(e(HelloWorld), domContainer);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _vue_hello_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./vue/hello.vue */ "./resources/js/vue/hello.vue");
 /* harmony import */ var vue_google_charts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-google-charts */ "./node_modules/vue-google-charts/index.js");
 /* harmony import */ var _vue_chart_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./vue/chart.vue */ "./resources/js/vue/chart.vue");
+/* harmony import */ var _vue_geochart_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./vue/geochart.vue */ "./resources/js/vue/geochart.vue");
 
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__.default.use(vue_google_charts__WEBPACK_IMPORTED_MODULE_1__.default);
-var hello = new vue__WEBPACK_IMPORTED_MODULE_3__.default({
+
+vue__WEBPACK_IMPORTED_MODULE_4__.default.use(vue_google_charts__WEBPACK_IMPORTED_MODULE_1__.default);
+var hello = new vue__WEBPACK_IMPORTED_MODULE_4__.default({
   el: '#vuejs-test',
   components: {
     Hello: _vue_hello_vue__WEBPACK_IMPORTED_MODULE_0__.default
   },
   template: "<Hello/>"
 });
-var chart = new vue__WEBPACK_IMPORTED_MODULE_3__.default({
+var chart = new vue__WEBPACK_IMPORTED_MODULE_4__.default({
   el: '#vuejs-chart',
   components: {
     Chart: _vue_chart_vue__WEBPACK_IMPORTED_MODULE_2__.default
   },
   template: "<Chart/>"
+});
+var geochart = new vue__WEBPACK_IMPORTED_MODULE_4__.default({
+  el: '#vuejs-geochart',
+  components: {
+    GeoChart: _vue_geochart_vue__WEBPACK_IMPORTED_MODULE_3__.default
+  },
+  template: "<GeoChart/>"
 });
 
 /***/ }),
@@ -54806,6 +54956,45 @@ component.options.__file = "resources/js/vue/chart.vue"
 
 /***/ }),
 
+/***/ "./resources/js/vue/geochart.vue":
+/*!***************************************!*\
+  !*** ./resources/js/vue/geochart.vue ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _geochart_vue_vue_type_template_id_91c683d8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./geochart.vue?vue&type=template&id=91c683d8& */ "./resources/js/vue/geochart.vue?vue&type=template&id=91c683d8&");
+/* harmony import */ var _geochart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./geochart.vue?vue&type=script&lang=js& */ "./resources/js/vue/geochart.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _geochart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _geochart_vue_vue_type_template_id_91c683d8___WEBPACK_IMPORTED_MODULE_0__.render,
+  _geochart_vue_vue_type_template_id_91c683d8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/vue/geochart.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/vue/hello.vue":
 /*!************************************!*\
   !*** ./resources/js/vue/hello.vue ***!
@@ -54861,6 +55050,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/vue/geochart.vue?vue&type=script&lang=js&":
+/*!****************************************************************!*\
+  !*** ./resources/js/vue/geochart.vue?vue&type=script&lang=js& ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_geochart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./geochart.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/vue/geochart.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_geochart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/vue/hello.vue?vue&type=script&lang=js&":
 /*!*************************************************************!*\
   !*** ./resources/js/vue/hello.vue?vue&type=script&lang=js& ***!
@@ -54890,6 +55095,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_chart_vue_vue_type_template_id_47c981f2___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_chart_vue_vue_type_template_id_47c981f2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./chart.vue?vue&type=template&id=47c981f2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/vue/chart.vue?vue&type=template&id=47c981f2&");
+
+
+/***/ }),
+
+/***/ "./resources/js/vue/geochart.vue?vue&type=template&id=91c683d8&":
+/*!**********************************************************************!*\
+  !*** ./resources/js/vue/geochart.vue?vue&type=template&id=91c683d8& ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_geochart_vue_vue_type_template_id_91c683d8___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_geochart_vue_vue_type_template_id_91c683d8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_geochart_vue_vue_type_template_id_91c683d8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./geochart.vue?vue&type=template&id=91c683d8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/vue/geochart.vue?vue&type=template&id=91c683d8&");
 
 
 /***/ }),
@@ -54936,6 +55158,48 @@ var render = function() {
           data: _vm.chartData,
           options: _vm.chartOptions
         }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/vue/geochart.vue?vue&type=template&id=91c683d8&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/vue/geochart.vue?vue&type=template&id=91c683d8& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("GChart", {
+        attrs: {
+          settings: {
+            packages: ["geochart"],
+            mapsApiKey: "AIzaSyCXjs9irYKjcvNAAzF83CAUCxuIdi9aYqk"
+          },
+          type: "GeoChart",
+          data: _vm.chartData,
+          options: _vm.chartOptions
+        },
+        on: { ready: _vm.onChartReady }
       })
     ],
     1

@@ -11,6 +11,8 @@
 
         <!-- Styles -->
         <link href="{{mix ('css/all.css')}}" rel="stylesheet">
+
+        <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
@@ -32,7 +34,6 @@
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
                     <h1 class="text-gray-900 dark:text-white text-3xl">Exjobb - a18eliek</h1>
                 </div>
-                
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                     <div class="grid grid-cols-1 md:grid-cols-2">
                         <div class="p-6">
@@ -78,6 +79,13 @@
                             </div>
                         </div>
 
+                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
+                            <div class="ml-12">
+                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm text-center" id="vuejs-geochart">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
