@@ -19,13 +19,13 @@ helpers = {
         let hours = d.getHours();
 
         // current minutes
-        let minutes = d.getMinutes();
+        let minutes = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
 
         // current seconds
         let seconds = d.getSeconds();
 
         // current milliseconds
-        let milliseconds = d.getMilliseconds();
+        let milliseconds = (d.getMilliseconds() < 100 ? '0' : '') + d.getMilliseconds();
 
         // Return HH:mm:ss.S
         return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
