@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed69c2883bae76c9602d9aadaadd13ba",
+    "content-hash": "90786221e94615802ec2982eb399ab5f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2423,6 +2423,64 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "sokil/php-isocodes",
+            "version": "3.3.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sokil/php-isocodes.git",
+                "reference": "a399f184a9cba9d56c27fdaff94e80cd5b932834"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sokil/php-isocodes/zipball/a399f184a9cba9d56c27fdaff94e80cd5b932834",
+                "reference": "a399f184a9cba9d56c27fdaff94e80cd5b932834",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "ext-gettext": "*",
+                "infection/infection": ">=0.11.5",
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpmd/phpmd": "@stable",
+                "phpunit/phpunit": ">=7.5.20",
+                "squizlabs/php_codesniffer": "^3.4",
+                "symfony/translation": "^4.4.17|^5.2",
+                "vimeo/psalm": "^4.3"
+            },
+            "suggest": {
+                "ext-gettext": "Required for gettext translation driver",
+                "phpbench/phpbench": "Required to run benchmarks",
+                "symfony/translation": "Translation driver by Symfont project"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sokil\\IsoCodes\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmytro Sokil",
+                    "email": "dmytro.sokil@gmail.com"
+                }
+            ],
+            "description": "ISO country, subdivision, language, currency and script definitions and their translations. Based on pythons pycountry and Debian's iso-codes.",
+            "support": {
+                "issues": "https://github.com/sokil/php-isocodes/issues",
+                "source": "https://github.com/sokil/php-isocodes/tree/3.3.6"
+            },
+            "time": "2021-03-17T16:39:05+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
