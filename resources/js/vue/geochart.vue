@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<GChart
-			:settings="{ packages: ['geochart'], mapsApiKey: 'AIzaSyBfh9ZdqldzTDvpFGegSufW9f-sxbWJ-94' }"
+			:settings="chartSettings"
 			type="GeoChart"
 			:data="chartData"
 			:options="chartOptions"
@@ -12,6 +12,7 @@
 <script>
 
 const default_layout = "default";
+
 import { GChart } from 'vue-google-charts'
 
 export default {
@@ -46,9 +47,15 @@ export default {
 	},
 	data () {
 		return {
+			chartSettings: { 
+				packages: ['geochart'], 
+				mapsApiKey: process.env.MIX_GOOGLE_MAPS_API 
+			},
+	
 			chartData: [
 				['Country', 'Count']
 			],
+
 			chartOptions: {
 				chart: {
 					title: 'GeoChart Test'

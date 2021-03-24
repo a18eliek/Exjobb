@@ -32,9 +32,9 @@ const GeoChart = () => {
 					<Chart 
 						chartType="GeoChart"
 						data={component.state.chartData}
-						mapsApiKey="AIzaSyBfh9ZdqldzTDvpFGegSufW9f-sxbWJ-94"
+						mapsApiKey={{ key: process.env.GOOGLE_MAP_KEY }}
 						options={{
-						title:"GeoChart"
+							title:"GeoChart"
 						}}
 					/>
 					: <i className="fas fa-spinner fa-spin"></i>
