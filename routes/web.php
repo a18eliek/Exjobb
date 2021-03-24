@@ -13,6 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/data', function () {
+    // $response = Http::get('https://opendata.ecdc.europa.eu/covid19/casedistribution/json');
+    $data = json_decode(file_get_contents('../storage/app/covid_data.json'));
+    $newData = [];
+    foreach($data as $x) {
+        // TODO: This needs to be handled better for prod.
+        if($x->year_week == "2021-10")
+            $newData[$x->country] = $x->cumulative_count;
+      }
+
+      header('Content-Type: application/json');
+      echo json_encode($newData);
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
