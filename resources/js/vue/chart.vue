@@ -46,7 +46,7 @@ export default {
 	data () {
 		return {
 			chartData: [
-				['Country', 'Value']
+				['Country', 'Value'], [0, 0]
 			],
 			chartOptions: {
 				chart: {
