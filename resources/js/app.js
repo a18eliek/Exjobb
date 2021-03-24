@@ -1,17 +1,27 @@
 
 helpers = {
     timerStart: function(func, file) {
-        var tpl = 'background-color:greenyellow; border:3px solid green; font-weight: bold;padding:3px 5px;color:';
-        console.log('%c[' + helpers.timeStamp() + ']' + '%c[start]' + '%c' + file + '::' + func, 
-                     tpl+'magenta', tpl+'red', tpl+'blue');
         window['timer_' + file + '_' + func] = new Date();
-
+        console.log(
+            `%c [${helpers.timeStamp()}] %c start %c ${file} %c ${func} %c `,
+            'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+            'background:#41b883 ; padding: 1px; border-radius: 0 0 0 0;  color: #fff',
+            'background:#A9329F ; padding: 1px; border-radius: 0 0 0 0;  color: #fff',
+            'background:#2F329F ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+            'background:transparent'
+          );
     },
     timerEnd: function(func, file) {
         var curTime = new Date();
-        var tpl = 'background-color:greenyellow; border:3px solid red; font-weight: bold;padding:3px 5px;color:';
-        console.log('%c[' + helpers.timeStamp() + ']' + '%c[end]' + '' + '%cTime: ' + (curTime - window['timer_' + file + '_' + func]) + ' ms' + '%c' + file + '::' + func, 
-                     tpl+'magenta', tpl+'red', tpl+'red', tpl+'blue');
+        console.log(
+            `%c [${helpers.timeStamp()}] %c end   %c ${file} %c ${func} %c Time: ${(curTime - window['timer_' + file + '_' + func])} ms %c `,
+            'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+            'background:#ff4c4c ; padding: 1px; border-radius: 0 0 0 0;  color: #fff',
+            'background:#A9329F ; padding: 1px; border-radius: 0 0 0 0;  color: #fff',
+            'background:#2F329F ; padding: 1px; border-radius: 0 0 0 0;  color: #fff',
+            'background:#35495e ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+            'background:transparent'
+          );
     },
     timeStamp: function() {
         let d = new Date();
