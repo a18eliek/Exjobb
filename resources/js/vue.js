@@ -3,6 +3,7 @@ import Hello from './vue/hello.vue'
 import VueGoogleCharts from 'vue-google-charts'
 import Chart from './vue/chart.vue'
 import GeoChart from './vue/geochart.vue'
+import Timeline from './vue/timeline.vue'
 
 Vue.use(VueGoogleCharts)
 
@@ -22,4 +23,10 @@ const geochart = new Vue({
     el: '#vuejs-geochart',
     components: { GeoChart },
     template: "<GeoChart/>"
+});
+
+const timeline = new Vue({
+    el: '#vuejs-timeline',
+    components: { Timeline },
+    template: "<Timeline/>"
 });
