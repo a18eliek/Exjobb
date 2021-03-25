@@ -39,6 +39,45 @@ Route::get('/data', function () {
       exit;
 });
 
+Route::get('/data/latest/total', function () {
+    \Debugbar::disable();
+   
+    // $response = Http::get('https://opendata.ecdc.europa.eu/covid19/casedistribution/json');
+    $data = json_decode(file_get_contents('../storage/app/covid_data.json'));
+    $newData = [];
+
+    $dates = [];
+    foreach($data as $x) {
+        if (in_array($x->year_week, $dates)) {
+            break;
+        }
+        array_push($dates, $x->year_week);
+    }
+
+    $latest = end($dates);
+
+    foreach($data as $x) {
+        if(isset($x->country_code) && $x->year_week == $latest) {
+            if($x->country_code == 'XKX') { // Kosovo appears to have a weird code
+                $newData[$x->year_week]['XK'] = $x->cumulative_count;
+            } else {
+                $isoCodes = new \Sokil\IsoCodes\IsoCodesFactory();
+                $country = $isoCodes->getCountries()->getByAlpha3($x->country_code);
+                $newData[$x->year_week][$country->getAlpha2()] = [
+                    'weekly_count' => $x->weekly_count,
+                    'cumulative' => $x->cumulative_count,
+                ];
+            }
+        }     
+      }
+
+      arsort($newData); // Sort values according to value
+
+      header('Content-Type: application/json');
+      echo json_encode($newData[$latest]);
+      exit;
+});
+
 // TODO: This needs to be adapted to work with any country
 Route::get('/data/swe', function () {
     \Debugbar::disable();
