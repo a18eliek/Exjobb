@@ -37,6 +37,13 @@ jobs:
         username: ${{ secrets.ftpuser }}
         password: ${{ secrets.ftppass }}
         port: ${{ secrets.ftpport }}
+        server-dir: /var/www/a18eliek
+        exclude: .git*
+          - .git*/**
+          -  **/.git*/**
+          - node_modules/**
+          - node_modules/**/*
+          - .env
 
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
