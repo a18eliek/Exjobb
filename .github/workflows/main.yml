@@ -9,7 +9,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: 📂 Sync files
-      uses: hrsetyono/git-sftp-action@v4
+      uses: hrsetyono/git-sftp-action@4.0.1
       with:
         url: "sftp://{{ secrets.ftpserver}}:${{ secrets.ftpport }}/var/www/a18eliek"
         user: ${{ secrets.ftpuser }}
