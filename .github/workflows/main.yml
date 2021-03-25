@@ -28,7 +28,7 @@ jobs:
     - name:  🔨 Install PHP dependencies
       uses: php-actions/composer@v5
       with:
-        command: composer update
+        command: update
     
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
