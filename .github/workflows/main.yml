@@ -14,6 +14,6 @@ jobs:
     - name: 📂 Sync files
       uses: fabeabe/git-sftp-action@1.1.1
       with:
-        url: "sftp://{{ secrets.ftpuser }}:${{ secrets.ftppass }}@${{ secrets.ftpserver}}:${{ secrets.ftpport }}/var/www/a18eliek"
+        url: "sftp://${{ secrets.ftpuser }}:${{ secrets.ftppass }}@${{ secrets.ftpserver}}:${{ secrets.ftpport }}/var/www/a18eliek"
         user: ${{ secrets.ftpuser }}
         password: ${{ secrets.ftppass }}
