@@ -31,12 +31,11 @@ jobs:
         command: update
     
     - name: 📂 Sync files
-      uses: hrsetyono/git-sftp-action@4.0.1
+      uses: Atyn/simple-sftp-action@0.0.2
       with:
-        url: "sftp://${{ secrets.ftpserver }}:${{ secrets.ftpport }}/var/www/a18eliek/"
-        user: ${{ secrets.ftpuser }}
-        password: ${{ secrets.ftppass }}
-       
+        url: sftp://${{ secrets.ftpuser }}:${{ secrets.ftppass }}@${{ secrets.ftpserver }}:${{ secrets.ftpport }}/var/www/a18eliek
+        local-directory: /
+        
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
