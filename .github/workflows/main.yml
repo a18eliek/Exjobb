@@ -31,20 +31,12 @@ jobs:
         command: update
     
     - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      uses: hrsetyono/git-sftp-action@v4
       with:
-        server: ${{ secrets.ftpserver }}
-        username: ${{ secrets.ftpuser }}
+        url: "sftp://${{ secrets.ftpserver }}:${{ secrets.ftpport }}/var/www/a18eliek/"
+        user: ${{ secrets.ftpuser }}
         password: ${{ secrets.ftppass }}
-        port: ${{ secrets.ftpport }}
-        server-dir: /var/www/a18eliek/
-        exclude: .git*
-          - .git*/**
-          -  **/.git*/**
-          - node_modules/**
-          - node_modules/**/*
-          - .env
-
+       
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
