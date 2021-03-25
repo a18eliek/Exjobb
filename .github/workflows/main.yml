@@ -37,7 +37,7 @@ jobs:
         username: ${{ secrets.ftpuser }}
         password: ${{ secrets.ftppass }}
         port: ${{ secrets.ftpport }}
-        server-dir: /var/www/a18eliek
+        server-dir: /var/www/a18eliek/
         exclude: .git*
           - .git*/**
           -  **/.git*/**
