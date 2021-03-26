@@ -25,7 +25,7 @@ export default {
 			helpers.timerStart("onChartReady", "geochart.vue" );
 			$.ajax({
 				type: 'get',
-				url: 'http://127.0.0.1:8000/data',
+				url: '/data/latest/total',
 				dataType:"json",
 				success: function(response, status, jqXHR) {
 					helpers.timerStart("onChartReady->success", "geochart.vue" );
@@ -33,10 +33,15 @@ export default {
 					var data = new google.visualization.DataTable(response);
 
 					data.addColumn('string', 'Country');
-					data.addColumn('number', 'Count');
+					data.addColumn('number', 'Total');
+					data.addColumn({type: 'string', role: 'tooltip'});
 
 					const dataPoints = Object.keys(response).map(key => [key, response[key]]);
-					data.addRows(dataPoints);
+					
+					dataPoints.forEach(function(x) {
+						var tooltip = x[1]['country'] + '\n Total: ' + x[1]['cumulative'] + '\nThis Week: ' + x[1]['weekly_count'];
+						data.addRow([x[0], x[1]['cumulative'], tooltip]);
+					});
 
 					var options = {
 						title:'GeoChart Test'
