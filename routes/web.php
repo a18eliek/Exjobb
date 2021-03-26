@@ -59,11 +59,16 @@ Route::get('/data/latest/total', function () {
     foreach($data as $x) {
         if(isset($x->country_code) && $x->year_week == $latest) {
             if($x->country_code == 'XKX') { // Kosovo appears to have a weird code
-                $newData[$x->year_week]['XK'] = $x->cumulative_count;
+                $newData[$x->year_week]['XK'] = [
+                    'country' => $x->country,
+                    'weekly_count' => $x->weekly_count,
+                    'cumulative' => $x->cumulative_count,
+                ];
             } else {
                 $isoCodes = new \Sokil\IsoCodes\IsoCodesFactory();
                 $country = $isoCodes->getCountries()->getByAlpha3($x->country_code);
                 $newData[$x->year_week][$country->getAlpha2()] = [
+                    'country' => $x->country,
                     'weekly_count' => $x->weekly_count,
                     'cumulative' => $x->cumulative_count,
                 ];
