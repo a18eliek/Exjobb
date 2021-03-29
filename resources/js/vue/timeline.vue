@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<v-select 
+			class="style-chooser" 
+			placeholder="Pick Country"
+			:options="dropdown"
+		/>
 		<GChart
 			type="ColumnChart"
 			:data="chartData"
@@ -12,6 +17,7 @@
 
 const default_layout = "default";
 import { GChart } from 'vue-google-charts'
+import countryCodes from '../countryCodes'
 
 export default {
 	name: "Timeline",
@@ -56,7 +62,21 @@ export default {
 			});
 
 			helpers.timerEnd("onChartReady", "timeline.vue" );
-		}
+		},
+		onSearch(search, loading) {
+			if(search.length) {
+				loading(true);
+				this.search(loading, search, this);
+			}
+		},
+		search: _.debounce((loading, search, vm) => {
+			fetch(
+				`https://api.github.com/search/repositories?q=${escape(search)}`
+			).then(res => {
+				res.json().then(json => (vm.options = json.items));
+				loading(false);
+			});
+		}, 350)
 	},
 	data () {
 		return {
@@ -65,7 +85,8 @@ export default {
 			],
 			chartOptions: {
 				legend: 'none',
-			}
+			},
+			dropdown: countryCodes
 		}
   }
 };

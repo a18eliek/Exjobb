@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import vSelect from 'vue-select'
 import Hello from './vue/hello.vue'
 import VueGoogleCharts from 'vue-google-charts'
 import Chart from './vue/chart.vue'
@@ -6,6 +7,7 @@ import GeoChart from './vue/geochart.vue'
 import Timeline from './vue/timeline.vue'
 
 Vue.use(VueGoogleCharts)
+Vue.component('v-select', vSelect)
 
 const hello = new Vue({
     el: '#vuejs-test',
