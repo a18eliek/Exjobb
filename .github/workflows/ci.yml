@@ -1,17 +1,21 @@
-name: CI
-
-on: [push]
+name: DEPLOY
+on:
+  push:
+    branches:
+    - master
 
 jobs:
   deploy:
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Push to server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER }}
-          port: ${{ secrets.PORT }}
-          username: ${{ secrets.USER }}
-          password: ${{ secrets.PASS }}
-          script: whoami
+    - uses: actions/checkout@v2
+    - name: rsync deployments
+      uses: burnett01/rsync-deployments@4.1
+      with:
+        switches: -avzr --delete
+        path: /
+        remote_path: /var/www/a18eliek/
+        remote_host: ${{ secrets.SERVER }}
+        remote_port: ${{ secrets.PORT }}
+        remote_user: ${{ secrets.USER }}
+        remote_key: ${{ secrets.KEY }}
