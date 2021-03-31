@@ -9,10 +9,10 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    versioning-strategy: increase_versions_if_necessary
+    versioning-strategy: increase-if-necessary
     
   - package-ecosystem: "composer" 
     directory: "/"
     schedule:
       interval: "weekly"
-    versioning-strategy: increase_versions_if_necessary
+    versioning-strategy: increase-if-necessary
