@@ -8,8 +8,11 @@ updates:
   - package-ecosystem: "npm" 
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+    versioning-strategy: increase_versions_if_necessary
+    
   - package-ecosystem: "composer" 
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+    versioning-strategy: increase_versions_if_necessary
