@@ -17,7 +17,7 @@ jobs:
     - name: Building Node packages
       run: |
         npm install
-        npm run build
+        npm run prod
 
     - name: rsync deployments
       uses: burnett01/rsync-deployments@4.1
