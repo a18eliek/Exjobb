@@ -12,7 +12,7 @@
         "@babel/preset-react": "^7.12.13",
         "@tailwindcss/forms": "^0.2.1",
         "@typescript-eslint/eslint-plugin": "^4.17.0",
-        "@typescript-eslint/parser": "^4.17.0",
+        "@typescript-eslint/parser": "^4.20.0",
         "alpinejs": "^2.7.3",
         "autoprefixer": "^10.1.0",
         "axios": "^0.21",
@@ -36,7 +36,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.2",
-        "@reach/component-component": "^0.13.1",
+        "@reach/component-component": "^0.14.0",
         "react-google-charts": "^3.0.15",
         "vue": "^2.6.12",
         "vue-google-charts": "^0.3.3"
