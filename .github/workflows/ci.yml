@@ -6,18 +6,19 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    
+    - name: Getting the latest code
+      uses: actions/checkout@v2
+
     - name: Node.js Setup
     - uses: actions/setup-node@v2
       with:
         node-version: '14'
-      
+
     - name: Building Node packages
       run: |
         npm install
         npm run build
-    
+
     - name: rsync deployments
       uses: burnett01/rsync-deployments@4.1
       with:
