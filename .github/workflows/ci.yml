@@ -47,6 +47,7 @@ jobs:
           sudo su
           cd /var/www/a18eliek
           cp /var/www/.a18eliek_data/.env /var/www/a18eliek/.env
+          php artisan migrate
           chgrp -R www-data storage bootstrap/cache
           chmod -R ug+rwx storage bootstrap/cache
           
