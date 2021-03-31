@@ -1,0 +1,54 @@
+name: Continuous integration
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Getting the latest code
+      uses: actions/checkout@v2
+
+    - name: Node.js Setup
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Building Node packages
+      run: |
+        npm install
+        npm run prod
+        
+    - name: Install composer dependencies
+      uses: php-actions/composer@v5
+      with:
+        dev: no
+        args: --profile --ignore-platform-reqs
+        
+    - name: Syncing files with server
+      uses: burnett01/rsync-deployments@4.1
+      with:
+        switches: -p -avzr --delete
+        path: /
+        remote_path: /var/www/a18eliek/
+        remote_host: ${{ secrets.SERVER }}
+        remote_port: ${{ secrets.PORT }}
+        remote_user: ${{ secrets.USER }}
+        remote_key: ${{ secrets.KEY }}
+
+    - name: Server configuration
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER }}
+        username: ${{ secrets.USER }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          sudo su
+          cd /var/www/a18eliek
+          cp /var/www/.a18eliek_data/.env /var/www/a18eliek/.env
+          php artisan migrate
+          chgrp -R www-data storage bootstrap/cache
+          chmod -R ug+rwx storage bootstrap/cache
