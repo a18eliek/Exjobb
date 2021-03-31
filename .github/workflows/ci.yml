@@ -44,6 +44,7 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
+          sudo su
           cd /var/www/a18eliek
           cp /var/www/.a18eliek_data/.env /var/www/a18eliek/.env
           sudo chgrp -R www-data storage bootstrap/cache
