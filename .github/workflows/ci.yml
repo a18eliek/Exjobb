@@ -28,7 +28,7 @@ jobs:
     - name: Syncing files with server
       uses: burnett01/rsync-deployments@4.1
       with:
-        switches: -avzr --delete
+        switches: -p -avzr --delete
         path: /
         remote_path: /var/www/a18eliek/
         remote_host: ${{ secrets.SERVER }}
