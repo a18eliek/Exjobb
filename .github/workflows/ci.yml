@@ -18,8 +18,14 @@ jobs:
       run: |
         npm install
         npm run prod
-
-    - name: rsync deployments
+        
+    - name: Install composer dependencies
+      uses: php-actions/composer@v5
+      with:
+        dev: no
+        args: --profile --ignore-platform-reqs
+        
+    - name: Syncing files with server
       uses: burnett01/rsync-deployments@4.1
       with:
         switches: -avzr --delete
