@@ -25,7 +25,7 @@ export default {
 			helpers.timerStart("onChartReady", "geochart.vue" );
 			$.ajax({
 				type: 'get',
-				url: '/data/latest/total',
+				url: '/data/',
 				dataType:"json",
 				success: function(response, status, jqXHR) {
 					helpers.timerStart("onChartReady->success", "geochart.vue" );
@@ -33,18 +33,18 @@ export default {
 					var data = new google.visualization.DataTable(response);
 
 					data.addColumn('string', 'Country');
-					data.addColumn('number', 'Total');
-					data.addColumn({type: 'string', role: 'tooltip'});
+					data.addColumn('number', 'Total Cases');
+					data.addColumn('number', 'Total Deaths');
+					// data.addColumn({type: 'string', role: 'tooltip'});
 
 					const dataPoints = Object.keys(response).map(key => [key, response[key]]);
 					
 					dataPoints.forEach(function(x) {
-						var tooltip = x[1]['country'] + '\n Total: ' + x[1]['cumulative'] + '\nThis Week: ' + x[1]['weekly_count'];
-						data.addRow([x[0], x[1]['cumulative'], tooltip]);
+						data.addRow([x[0], x[1]['totalCases'], x[1]['totalDeaths']]);
 					});
 
 					var options = {
-						title:'GeoChart Test'
+						region: '150'
 					};
 
 					chart.draw(data, options);
@@ -67,7 +67,7 @@ export default {
 
 			chartOptions: {
 				chart: {
-					title: 'GeoChart Test'
+					region: '150'
 				}
 			}
 		}
