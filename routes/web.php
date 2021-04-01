@@ -39,6 +39,7 @@ Route::get('/data/{country?}', function ($country = null) {
     foreach($daily as $x) {
         if (!in_array($x->geoId, $data)) {
             $data[$x->countriesAndTerritories] = [
+                'country' => $x->countriesAndTerritories,
                 'geoId' => $x->geoId,
                 'code' => $x->countryterritoryCode,
                 'popData2020' => $x->popData2020,
@@ -87,6 +88,11 @@ Route::get('/data/{country?}', function ($country = null) {
     }
 
     header('Content-Type: application/json');
+
+    // Sort the data based on total reported cases
+    usort($data, function ($x, $y) {
+        return $y['totalCases'] - $x['totalCases'];
+    });
 
     // Processes the output whether or not we show one or all countries
     if(isset($data[ucfirst($country)])) {
