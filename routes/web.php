@@ -13,26 +13,48 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/**
+ *  Modifies the dataset provided by ECDC (https://opendata.ecdc.europa.eu/covid19/casedistribution/json)
+ *  Dataset will be in a much smaller state and will still contain the same information.
+ *  ECDC's dataset does not contain daily information from before 01/03/2021 on some cases, 
+ *  therefore there's a huge spike, this makes graphing the data daily at that date unhelpful for the enduser.
+ */
 Route::get('/data', function () {
     \Debugbar::disable();
    
-    // $response = Http::get('https://opendata.ecdc.europa.eu/covid19/casedistribution/json');
-    $data = json_decode(file_get_contents('../storage/app/covid_data.json'));
-    $newData = [];
-    foreach($data as $x) {
-        // TODO: This needs to be handled better for prod.
-        if(isset($x->country_code) && $x->year_week == "2021-10") {
-            if($x->country_code == 'XKX') { // Kosovo appears to have a weird code
-                $newData['XK'] = $x->cumulative_count;
-            } else {
-                $isoCodes = new \Sokil\IsoCodes\IsoCodesFactory();
-                $country = $isoCodes->getCountries()->getByAlpha3($x->country_code);
-                $newData[$country->getAlpha2()] = $x->cumulative_count;
-            }
-        }     
-      }
+    $daily = json_decode(file_get_contents('../storage/app/covid19_europe_daily.json'))->records;
 
-      arsort($newData); // Sort values according to value
+    $data = [];
+    foreach($daily as $x) {
+        if (!in_array($x->geoId, $data)) {
+            $data[$x->geoId] = [
+                'name' => $x->countriesAndTerritories,
+                'code' => $x->countryterritoryCode,
+                'popData2020' => $x->popData2020,
+                'total_cases' => 0,
+                'total_deaths' => 0
+            ];
+        }
+    }
+
+    foreach($daily as $x) {
+        // ECDC uses incontinence dateformats
+        $date = DateTime::createFromFormat('d/m/Y', $x->dateRep)->format('Y-m-d');
+  
+        $data[$x->geoId]['data'][$date] = [
+            'cases' => $x->cases,
+            'deaths' => $x->deaths,
+        ];
+
+        // Update the totals
+        $data[$x->geoId]['total_cases'] += $x->cases;
+        $data[$x->geoId]['total_deaths'] += $x->deaths;
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode($data);
+    exit;
+});
 
       header('Content-Type: application/json');
       echo json_encode($newData);
