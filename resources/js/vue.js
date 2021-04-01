@@ -4,7 +4,7 @@ import Hello from './vue/hello.vue'
 import VueGoogleCharts from 'vue-google-charts'
 import Chart from './vue/chart.vue'
 import GeoChart from './vue/geochart.vue'
-import Timeline from './vue/timeline.vue'
+// import Timeline from './vue/timeline.vue'
 
 Vue.use(VueGoogleCharts)
 Vue.component('v-select', vSelect)
@@ -27,8 +27,8 @@ const geochart = new Vue({
     template: "<GeoChart/>"
 });
 
-const timeline = new Vue({
-    el: '#vuejs-timeline',
-    components: { Timeline },
-    template: "<Timeline/>"
-});
+// const timeline = new Vue({
+//     el: '#vuejs-timeline',
+//     components: { Timeline },
+//     template: "<Timeline/>"
+// });
