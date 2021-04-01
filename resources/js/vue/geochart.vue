@@ -35,12 +35,9 @@ export default {
 					data.addColumn('string', 'Country');
 					data.addColumn('number', 'Total Cases');
 					data.addColumn('number', 'Total Deaths');
-					// data.addColumn({type: 'string', role: 'tooltip'});
 
-					const dataPoints = Object.keys(response).map(key => [key, response[key]]);
-					
-					dataPoints.forEach(function(x) {
-						data.addRow([x[0], x[1]['totalCases'], x[1]['totalDeaths']]);
+					Object.entries(response).forEach(([key, x]) => {
+						data.addRow([x.country, x.totalCases, x.totalDeaths]);
 					});
 
 					var options = {
