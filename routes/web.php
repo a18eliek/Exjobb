@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/update', function () {
+    \Debugbar::disable();
+   
+    file_put_contents("../storage/app/covid19_europe_daily.json", fopen("https://opendata.ecdc.europa.eu/covid19/nationalcasedeath_eueea_daily_ei/json/", 'r'));
+    file_put_contents("../storage/app/hospitalicuadmissionrates.json", fopen("https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/json/", 'r'));
+    echo "All datasets have been updated!";
+    exit;
+});
+
 /**
  *  Modifies the dataset provided by ECDC (https://opendata.ecdc.europa.eu/covid19/casedistribution/json)
  *  Dataset will be in a much smaller state and will still contain the same information.
