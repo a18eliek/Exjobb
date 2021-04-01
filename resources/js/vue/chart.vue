@@ -23,7 +23,7 @@ export default {
 			helpers.timerStart("onChartReady", "chart.vue" );
 			$.ajax({
 				type: 'get',
-				url: 'http://127.0.0.1:8000/data',
+				url: '/data/',
 				dataType:"json",
 				success: function(response, status, jqXHR) {
 					helpers.timerStart("onChartReady->success", "chart.vue" );
@@ -31,13 +31,19 @@ export default {
 					var data = new google.visualization.DataTable(response);
 
 					data.addColumn('string', 'Country');
-					data.addColumn('number', 'Count');
+					data.addColumn('number', 'Total Cases');
+					data.addColumn({type: 'string', role: 'tooltip'});
+					data.addColumn('number', 'Total Deaths');
+					data.addColumn({type: 'string', role: 'tooltip'});
 
-					const dataPoints = Object.keys(response).map(key => [key, response[key]]);
-					data.addRows(dataPoints);
+					Object.entries(response).forEach(([key, x]) => {
+						var tooltip = x.country + "\nTotal Cases: " + x.totalCases + "\nTotal Deaths: " + x.totalDeaths;
+						data.addRow([x.country, x.totalCases, tooltip, x.totalDeaths, tooltip]);
+					});
 
 					var options = {
-						title:'GeoChart Test'
+						isStacked: 'true',
+						legend: { position: 'top', alignment: 'start' }
 					};
 
 					chart.draw(data, options);
@@ -53,9 +59,7 @@ export default {
 				['Country', 'Value'], [0, 0]
 			],
 			chartOptions: {
-				chart: {
-				title: 'Vue.js Google Chart test'
-				}
+				legend: { position: 'none'}
 			}
 		}
   }
