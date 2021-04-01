@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/update', function () {
-    \Debugbar::disable();
+    if (App::environment('local')) {
+        \Debugbar::disable();
+    } 
    
     file_put_contents("../storage/app/covid19_europe_daily.json", fopen("https://opendata.ecdc.europa.eu/covid19/nationalcasedeath_eueea_daily_ei/json/", 'r'));
     file_put_contents("../storage/app/hospitalicuadmissionrates.json", fopen("https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/json/", 'r'));
@@ -29,7 +31,10 @@ Route::get('/update', function () {
  *  therefore there's a huge spike, this makes graphing the data daily at that date unhelpful for the enduser.
  */
 Route::get('/data/{country?}', function ($country = null) {
-    \Debugbar::disable();
+    if (App::environment('local')) {
+        \Debugbar::disable();
+    } 
+    
     $data = [];
     // Datasets from ECDC
     $daily = json_decode(file_get_contents('../storage/app/covid19_europe_daily.json'))->records;
