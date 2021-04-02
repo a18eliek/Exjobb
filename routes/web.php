@@ -117,6 +117,10 @@ Route::get('/vue', function () {
     return view('vue');
 });
 
+Route::get('/react', function () {
+    return view('react');
+});
+
 Route::get('/quiz', function () {
     return view('quiz');
 });
