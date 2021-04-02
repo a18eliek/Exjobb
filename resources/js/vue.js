@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import vSelect from 'vue-select'
-import Hello from './vue/hello.vue'
 import VueGoogleCharts from 'vue-google-charts'
 import Chart from './vue/chart.vue'
 import GeoChart from './vue/geochart.vue'
@@ -8,12 +7,6 @@ import GeoChart from './vue/geochart.vue'
 
 Vue.use(VueGoogleCharts)
 Vue.component('v-select', vSelect)
-
-const hello = new Vue({
-    el: '#vuejs-test',
-    components: { Hello },
-    template: "<Hello/>"
-});
 
 const chart = new Vue({
     el: '#vuejs-chart',
