@@ -16,9 +16,11 @@ mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'pub
     require('tailwindcss'),
     require('autoprefixer'),
 ])
-.react()
-.vue()
 .sass('resources/scss/style.scss', 'public/css');
+
+// Splitting React & Vue to sepeate files
+mix.js('resources/js/vue.js', 'public/js').vue();
+mix.js('resources/js/react.js', 'public/js').react();
 
 // Merge all styles into one
 mix.styles([
