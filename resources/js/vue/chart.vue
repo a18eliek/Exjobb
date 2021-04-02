@@ -55,6 +55,9 @@ export default {
 	},
 	data () {
 		return {
+			chartSettings: { 
+				mapsApiKey: process.env.MIX_GOOGLE_MAPS_API 
+			},
 			chartData: [
 				['Country', 'Value'], [0, 0]
 			],
