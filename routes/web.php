@@ -117,6 +117,10 @@ Route::get('/vue', function () {
     return view('vue');
 });
 
+Route::get('/vue/timeline', function () {
+    return view('vue_timeline');
+});
+
 Route::get('/react', function () {
     return view('react');
 });
