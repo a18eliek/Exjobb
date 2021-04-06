@@ -95,7 +95,7 @@ Route::get('/data/{country?}', function ($country = null) {
     header('Content-Type: application/json');
 
     // Sort the data based on total reported cases
-    usort($data, function ($x, $y) {
+    uasort($data, function ($x, $y) {
         return $y['totalCases'] - $x['totalCases'];
     });
 
