@@ -24,13 +24,22 @@ jobs:
       run: |
         npm install
         npm run prod
-        
-    - name: Install composer dependencies
-      uses: php-actions/composer@v5
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v2
       with:
-        dev: no
-        args: --profile --ignore-platform-reqs
-        
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install Composer dependencies
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
     - name: Syncing files with server
       uses: burnett01/rsync-deployments@4.1
       with:
