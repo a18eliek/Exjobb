@@ -3,19 +3,3 @@ $fa-font-path:        "../webfonts";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
 @import "~@fortawesome/fontawesome-free/scss/regular";
-@import "vue-select/src/scss/vue-select.scss";
-
-.style-chooser .vs__search::placeholder,
-.style-chooser .vs__dropdown-toggle,
-.style-chooser .vs__dropdown-menu {
-  background: #2d3848;
-  border: none;
-  color: #fff;
-  text-transform: lowercase;
-  font-variant: small-caps;
-}
-
-.style-chooser .vs__clear,
-.style-chooser .vs__open-indicator {
-  fill: #2d3848;
-}
