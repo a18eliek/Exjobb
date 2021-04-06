@@ -12,6 +12,7 @@
         <!-- Styles -->
         <link href="{{mix ('css/all.css')}}" rel="stylesheet">
         <script type="text/javascript" src="{{mix ('js/app.js')}}"></script>
+        @stack('custom_js_header')
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
