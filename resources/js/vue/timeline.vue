@@ -1,10 +1,5 @@
 <template>
 	<div>
-		<v-select 
-			class="style-chooser" 
-			placeholder="Pick Country"
-			:options="dropdown"
-		/>
 		<GChart
 			type="ColumnChart"
 			:data="chartData"
@@ -17,7 +12,6 @@
 
 const default_layout = "default";
 import { GChart } from 'vue-google-charts'
-import countryCodes from '../countryCodes'
 
 export default {
 	name: "Timeline",
@@ -26,67 +20,61 @@ export default {
 	},
 	methods: {
 		onChartReady (chart, google) {
-			helpers.timerStart("onChartReady", "timeline.vue" );
-
+			helpers.timerStart("onChartReady", "chart.vue" );
 			$.ajax({
 				type: 'get',
-				url: "http://127.0.0.1:8000/data/swe",
-				dataType: "json",
-			}).done(function (jsonData) {
-					helpers.timerStart("onChartReady->success", "timeline.vue" );
-					// Create the charts after operation succeeded 
-					var data = new google.visualization.DataTable(jsonData);
+				url: '/data/sweden',
+				dataType:"json",
+				success: function(response, status, jqXHR) {
+					helpers.timerStart("onChartReady->success", "chart.vue" );
+					/* Create the charts after operation succeeded */
+					var data = new google.visualization.DataTable(response);
+
 					data.addColumn('string', 'Country');
-					data.addColumn('number', 'Weekly ' + jsonData['indicator']);
-					data.addColumn('number', 'Total '  + jsonData['indicator']);
+					data.addColumn('number', 'Total Cases');
 					data.addColumn({type: 'string', role: 'tooltip'});
+					data.addColumn('number', 'Total Deaths');
+					data.addColumn({type: 'string', role: 'tooltip'});
+					data.addColumn('number', 'Total ICU');
+					data.addColumn({type: 'string', role: 'tooltip'});
+					
+					// Reverse the data for a better looking chart
+					response.daily = helpers.reverseObject(response.daily);	
+					
+					// Save first date for exclusion due to it being incorrect
+					let [firstDate] = Object.keys(response.daily)
 
-					const dataPoints = Object.keys(jsonData['data']).map(key => [key, jsonData['data'][key]]);
-
-					dataPoints.forEach(function(x) {
-						var tooltip = x[1]['start'] + ' - ' + x[1]['end'] + '\nWeekly ' + jsonData['indicator'] + ': ' + x[1]['weekly'] + '\nTotal '  + jsonData['indicator'] + ': ' + x[1]['cumulative'];
-						data.addRow([x[1]['start'] + ' - ' + x[1]['end'], x[1]['weekly'], x[1]['cumulative'], tooltip]);
-					})
+					Object.entries(response.daily).forEach(([date, x]) => {
+						var icu = (x.icu == null) ? "No data" : x.icu;
+						var tooltip = response.country + ": " + date + "\nTotal Cases: " + x.cases + "\nTotal Deaths: " + x.deaths + " \nTotal ICU: " + icu;
+						if(date != firstDate) { 
+							data.addRow([date, x.cases, tooltip, x.deaths, tooltip, x.icu, tooltip]);
+						}
+					});
 
 					var options = {
-						title: jsonData['country'] + ' - ' + jsonData['source'],
-						isStacked: true,
-						legend: { position: 'top', maxLines: 3 },
-        				bar: { groupWidth: '75%' },
+						isStacked: 'true',
+						legend: { position: 'top', alignment: 'start' }
 					};
 
 					chart.draw(data, options);
-					helpers.timerEnd("onChartReady->success", "timeline.vue" );
-			}).fail(function (jq, text, err) {
-				console.log(text + ' - ' + err);
+					helpers.timerEnd("onChartReady->success", "chart.vue" );
+				}
 			});
-
-			helpers.timerEnd("onChartReady", "timeline.vue" );
-		},
-		onSearch(search, loading) {
-			if(search.length) {
-				loading(true);
-				this.search(loading, search, this);
-			}
-		},
-		search: _.debounce((loading, search, vm) => {
-			fetch(
-				`https://api.github.com/search/repositories?q=${escape(search)}`
-			).then(res => {
-				res.json().then(json => (vm.options = json.items));
-				loading(false);
-			});
-		}, 350)
+			helpers.timerEnd("onChartReady", "chart.vue" );
+		}
 	},
 	data () {
 		return {
+			chartSettings: { 
+				mapsApiKey: process.env.MIX_GOOGLE_MAPS_API 
+			},
 			chartData: [
-				['Country', 'Weekly', 'Total'], [0, 0, 0]
+				['Country', 'Value'], [0, 0]
 			],
 			chartOptions: {
-				legend: 'none',
-			},
-			dropdown: countryCodes
+				legend: { position: 'none'}
+			}
 		}
   }
 };
