@@ -92,8 +92,6 @@ Route::get('/data/{country?}', function ($country = null) {
 
     }
 
-    header('Content-Type: application/json');
-
     // Sort the data based on total reported cases
     uasort($data, function ($x, $y) {
         return $y['totalCases'] - $x['totalCases'];
@@ -101,12 +99,10 @@ Route::get('/data/{country?}', function ($country = null) {
 
     // Processes the output whether or not we show one or all countries
     if(isset($data[ucfirst($country)])) {
-        echo json_encode($data[ucfirst($country)]);
+        return response()->json($data[ucfirst($country)]);
     } else {
-        echo json_encode($data);
+        return response()->json($data);
     }
-    
-    exit;
 });
 
 Route::get('/', function () {
