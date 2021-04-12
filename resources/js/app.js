@@ -22,6 +22,7 @@ helpers = {
             'background:#35495e ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
             'background:transparent'
           );
+          localStorage.setItem("datacollection", localStorage.getItem("datacollection") + `\n${helpers.timeStamp()},${file},${func},${(curTime - window['timer_' + file + '_' + func])}`);
     },
     timeStamp: function() {
         let d = new Date();
