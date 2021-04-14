@@ -22,7 +22,22 @@ helpers = {
             'background:#35495e ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
             'background:transparent'
           );
-          localStorage.setItem("datacollection", localStorage.getItem("datacollection") + `\n${helpers.timeStamp()},${file},${func},${(curTime - window['timer_' + file + '_' + func])}`);
+
+        /*
+        * Datacollection
+        */
+
+        // Everything
+        localStorage.setItem("datacollection_all", localStorage.getItem("datacollection_all") + `\n${file.split('.').pop()},${file},${func},${(curTime - window['timer_' + file + '_' + func])}`);
+          
+        // Framwork specific - only vue or react
+        localStorage.setItem(`datacollection_${file.split('.').pop()}`, localStorage.getItem(`datacollection_${file.split('.').pop()}`) + `\n${file.split('.').pop()},${file},${func},${(curTime - window['timer_' + file + '_' + func])}`);
+       
+        // Framwork specific with file and function
+        localStorage.setItem(`datacollection_${file.split('.').pop()}_${file}_${func}`, localStorage.getItem(`datacollection_${file.split('.').pop()}_${file}_${func}`) + `\n${file.split('.').pop()},${file},${func},${(curTime - window['timer_' + file + '_' + func])}`);
+          
+        // File specific - Only barcharts or geocharts
+        localStorage.setItem(`datacollection_${file.split('.').shift()}`, localStorage.getItem(`datacollection_${file.split('.').shift()}`) + `\n${file.split('.').pop()},${file},${func},${(curTime - window['timer_' + file + '_' + func])}`);
     },
     timeStamp: function() {
         let d = new Date();
@@ -33,7 +48,7 @@ helpers = {
         let minutes = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
 
         // current seconds
-        let seconds = d.getSeconds();
+        let seconds = (d.getSeconds() < 10 ? '0' : '') + d.getSeconds();
 
         // current milliseconds
         let milliseconds = (d.getMilliseconds() < 100 ? '0' : '') + d.getMilliseconds();
