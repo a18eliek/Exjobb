@@ -36,9 +36,11 @@ export default {
 					data.addColumn('number', 'Total Cases');
 					data.addColumn('number', 'Total Deaths');
 
-					Object.entries(response).forEach(([key, x]) => {
-						data.addRow([x.country, x.totalCases, x.totalDeaths]);
+					const dataPoints = Object.entries(response).map(key => {
+						return [key[1].country, key[1].totalCases, key[1].totalDeaths];
 					});
+
+					data.addRows(dataPoints);
 
 					var options = {
 						region: '150'
