@@ -36,10 +36,12 @@ export default {
 					data.addColumn('number', 'Total Deaths');
 					data.addColumn({type: 'string', role: 'tooltip'});
 
-					Object.entries(response).forEach(([key, x]) => {
-						var tooltip = x.country + "\nTotal Cases: " + x.totalCases + "\nTotal Deaths: " + x.totalDeaths;
-						data.addRow([x.country, x.totalCases, tooltip, x.totalDeaths, tooltip]);
+					const dataPoints = Object.entries(response).map(key => {
+						var tooltip = key[1].country + "\nTotal Cases: " + key[1].totalCases + "\nTotal Deaths: " + key[1].totalDeaths;
+						return [key[1].country, key[1].totalCases, tooltip, key[1].totalDeaths, tooltip];
 					});
+
+					data.addRows(dataPoints);
 
 					var options = {
 						isStacked: 'true',
