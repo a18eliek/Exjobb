@@ -5,7 +5,7 @@
 @section('content') 
 
     <div class="p-6">
-        <div class="text-center text-white text-2xl">
+        <div class="text-center text-white text-3xl">
             Stapeldiagram
         </div>
         <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm text-center" id="react-chart">
