@@ -20,9 +20,9 @@ const BarChart = () => {
 
 							const chartColumns = [[
 								{ type: "string", id: "Country" },
-								{ type: "number", id: "Total Cases" },
+								{ type: "number", label: "Total Cases" },
 								{ type: "string", role: "tooltip" },
-								{ type: "number", id: "Total Deaths" },
+								{ type: "number", label: "Total Deaths" },
 								{ type: "string", role: "tooltip" }
 							]];
 
