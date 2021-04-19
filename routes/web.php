@@ -121,8 +121,8 @@ Route::get('/react', function () {
     return view('react');
 });
 
-Route::get('/quiz', function () {
-    return view('quiz');
+Route::get('/userstudy', function () {
+    return view('userstudy');
 });
 
 Route::get('/dashboard', function () {
