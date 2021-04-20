@@ -117,8 +117,24 @@ Route::get('/vue/timeline', function () {
     return view('vue_timeline');
 });
 
+Route::get('/vue/geochart', function () {
+    return view('vue_geochart');
+});
+
+Route::get('/vue/barchart', function () {
+    return view('vue_barchart');
+});
+
 Route::get('/react', function () {
     return view('react');
+});
+
+Route::get('/react/geochart', function () {
+    return view('react_geochart');
+});
+
+Route::get('/react/barchart', function () {
+    return view('react_barchart');
 });
 
 Route::get('/userstudy', function () {

@@ -4,11 +4,10 @@ import Chart from './vue/chart.vue'
 import GeoChart from './vue/geochart.vue'
 import Timeline from './vue/timeline.vue'
 
-Vue.use(VueGoogleCharts)
+Vue.use(VueGoogleCharts);
 
 window.onload = function () {
-    var chart = document.getElementById('vuejs-chart');
-    if (chart) {
+    if (document.getElementById('vuejs-chart')) {
         const chart = new Vue({
             el: '#vuejs-chart',
             components: { Chart },
@@ -16,8 +15,7 @@ window.onload = function () {
         });
     }
 
-    var geochart = document.getElementById('vuejs-geochart');
-    if (geochart) {
+    if (document.getElementById('vuejs-geochart')) {
         const geochart = new Vue({
             el: '#vuejs-geochart',
             components: { GeoChart },
@@ -25,8 +23,7 @@ window.onload = function () {
         });
     }
 
-    var timeline = document.getElementById('vuejs-timeline');
-    if (timeline) {
+    if (document.getElementById('vuejs-timeline')) {
         const timeline = new Vue({
             el: '#vuejs-timeline',
             components: { Timeline },
