@@ -38,6 +38,18 @@ helpers = {
           
         // File specific - Only barcharts or geocharts
         localStorage.setItem(`datacollection_${file.split('.').shift()}`, localStorage.getItem(`datacollection_${file.split('.').shift()}`) + `\n${file.split('.').pop()},${file},${func},${(curTime - window['timer_' + file + '_' + func])}`);
+    
+        // Auto refresh of page
+        if (localStorage.getItem("autorefresh") === null) {
+            localStorage.setItem("autorefresh", false);
+        }
+
+        if(localStorage.getItem("autorefresh") == "true") {
+            window.setTimeout(function () {
+                window.location.reload();
+            }, 1000);
+        }
+    
     },
     timeStamp: function() {
         let d = new Date();
