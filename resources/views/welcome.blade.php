@@ -9,13 +9,21 @@
                 <i class="fab fa-react fa-4x text-white"></i>
                 <div class="ml-4 text-lg leading-7 font-semibold"><div class="text-gray-900 dark:text-white">React Charts</div></div>
             </a>
+            <p class="text-center text-white">
+                Please select what charts you want to take a look at:
+            </p>
+            <div class="text-center flex">
+                <a class="flex-1 mt-4 mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-lg" href="{{ URL::to('react/geochart') }}">
+                    <i class="fab fa-react fa-1x text-white"></i> GeoChart
+                </a>
+                
+                <a class="flex-1 mt-4 mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-lg" href="{{ URL::to('react/barchart') }}">
+                    <i class="fab fa-react fa-1x text-white"></i> BarChart
+                </a>
 
-            <div class="pt-3 text-gray-600 dark:text-gray-400 text-sm text-center" id="react-chart">
-                <i class="fas fa-spinner fa-spin"></i>
-            </div>
-            
-            <div class="pt-4 text-gray-600 dark:text-gray-400 text-sm text-center" id="react-geochart">
-                <i class="fas fa-spinner fa-spin"></i>
+                <a class="flex-1 mt-4 mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-lg" href="{{ URL::to('react') }}">
+                    <i class="fab fa-react fa-1x text-white"></i> Both
+                </a>
             </div>
         </div>
 
@@ -25,23 +33,23 @@
                 <div class="ml-4 text-lg leading-7 font-semibold"><div class="text-gray-900 dark:text-white">Vue.js Charts</div></div>
             </a>
 
-            <div class="pt-3 text-gray-600 dark:text-gray-400 text-sm text-center">
-                <div class="text-gray-600 dark:text-gray-400 text-sm text-center" id="vuejs-chart">
-                    <i class="fas fa-spinner fa-spin"></i>
-                </div>
-            </div>
+            <p class="text-center text-white">
+                Please select what charts you want to take a look at:
+            </p>
+            <div class="text-center flex">
+                <a class="flex-1 mt-4 mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-lg" href="{{ URL::to('vue/geochart') }}">
+                    <i class="fab fa-vuejs fa-1x text-white"></i> GeoChart
+                </a>
+                
+                <a class="flex-1 mt-4 mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-lg" href="{{ URL::to('vue/barchart') }}">
+                    <i class="fab fa-vuejs fa-1x text-white"></i> BarChart
+                </a>
 
-            <div class="pt-4 text-gray-600 dark:text-gray-400 text-sm text-center">
-                <div class="text-gray-600 dark:text-gray-400 text-sm text-center" id="vuejs-geochart">
-                    <i class="fas fa-spinner fa-spin"></i>
-                </div>
+                <a class="flex-1 mt-4 mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-lg" href="{{ URL::to('vue/geochart') }}">
+                    <i class="fab fa-vuejs fa-1x text-white"></i> Both
+                </a>
             </div>
         </div>
     </div>
 
 @stop 
-
-@Push('custom_js')
-    <script type="text/javascript" src="{{mix ('js/vue.js')}}"></script>
-    <script type="text/javascript" src="{{mix ('js/react.js')}}"></script>
-@endpush
