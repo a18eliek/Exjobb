@@ -40,7 +40,7 @@ const GeoChart = () => {
 					<Chart 
 						chartType="GeoChart"
 						data={component.state.chartData}
-						mapsApiKey={{ key: process.env.MIX_GOOGLE_MAPS_API }}
+						mapsApiKey={process.env.MIX_GOOGLE_MAPS_API}
 						options={{
 							title:"GeoChart",
 							region: "150"

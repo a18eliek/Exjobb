@@ -49,7 +49,7 @@ const BarChart = () => {
 					<Chart 
 						chartType="ColumnChart"
 						data={ component.state.chartData }
-						mapsApiKey={{ key: process.env.MIX_GOOGLE_MAPS_API }}
+						mapsApiKey={process.env.MIX_GOOGLE_MAPS_API}
 						options={{
             				isStacked: 'true',
               				legend: { position: 'top', alignment: 'start' },
