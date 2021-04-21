@@ -1,18 +1,19 @@
 <template>
-	<div>
-		<GChart
-			:settings="chartSettings"
-			type="GeoChart"
-			:data="chartData"
-			:options="chartOptions"
-			@ready="onChartReady"
-		/>
+	<div class="text-center">
+		<i v-if="!isDoneFetching" class="text-white fas fa-spinner fa-spin"></i>
+		<template v-if="isDoneFetching">
+			<GChart
+				:settings="chartSettings"
+				type="GeoChart"
+				:data="dataPoints"
+				:options="chartOptions"
+			/>
+		</template>
 	</div>
 </template>
 <script>
 
 const default_layout = "default";
-
 import { GChart } from 'vue-google-charts'
 
 export default {
@@ -21,55 +22,48 @@ export default {
 		GChart
 	},
 	methods: {
-		onChartReady (chart, google) {
-			helpers.timerStart("onChartReady", "geochart.vue" );
+		fetchData() {
 			$.ajax({
+				vm: this,
 				type: 'get',
 				url: '/data/',
 				dataType:"json",
-				success: function(response, status, jqXHR) {
-					helpers.timerStart("onChartReady->success", "geochart.vue" );
-					/* Create the charts after operation succeeded */
-					var data = new google.visualization.DataTable(response);
+				success: function(response) {
+					helpers.timerStart("fetchData->success", "geochart.vue" );
 
-					data.addColumn('string', 'Country');
-					data.addColumn('number', 'Total Cases');
-					data.addColumn('number', 'Total Deaths');
-
+					const chartData = [["Country", "Total Cases", "Total Deaths"]];
 					const dataPoints = Object.entries(response).map(key => {
 						return [key[1].country, key[1].totalCases, key[1].totalDeaths];
 					});
 
-					data.addRows(dataPoints);
+					this.vm.dataPoints =  chartData.concat(dataPoints);
+			
+					this.vm.isDoneFetching = true;
 
-					var options = {
-						region: '150'
-					};
-
-					chart.draw(data, options);
-					helpers.timerEnd("onChartReady->success", "geochart.vue" );
+					helpers.timerEnd("fetchData->success", "geochart.vue" );
 				}
 			});
-			helpers.timerEnd("onChartReady", "geochart.vue" );
-		}
+			
+		},
+	},
+	created() {
+		helpers.timerStart("fetchData", "geochart.vue" );
+		this.fetchData();
+		helpers.timerEnd("fetchData", "geochart.vue" );
 	},
 	data () {
 		return {
+			isDoneFetching: false,
+			dataPoints: null,
 			chartSettings: { 
 				packages: ['geochart'], 
 				mapsApiKey: process.env.MIX_GOOGLE_MAPS_API 
 			},
-	
-			chartData: [
-				['Country', 'Count']
-			],
-
+			chartData: this.dataPoints,
 			chartOptions: {
-				chart: {
-					region: '150'
-				}
+				region: '150'
 			}
 		}
-	}
+  	}
 };
 </script>
