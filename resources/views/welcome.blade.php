@@ -45,7 +45,7 @@
                     <i class="fab fa-vuejs fa-1x text-white"></i> BarChart
                 </a>
 
-                <a class="flex-1 mt-4 mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-lg" href="{{ URL::to('vue/geochart') }}">
+                <a class="flex-1 mt-4 mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-lg" href="{{ URL::to('vue') }}">
                     <i class="fab fa-vuejs fa-1x text-white"></i> Both
                 </a>
             </div>
