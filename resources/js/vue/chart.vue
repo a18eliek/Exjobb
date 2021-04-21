@@ -31,7 +31,7 @@ export default {
 					helpers.timerStart("fetchData->success", "chart.vue" );
 					
 					const chartColumns = { cols: [
-						{ type: "string", id: "Country" },
+						{ type: "string", label: "Country" },
 						{ type: "number", label: "Total Cases" },
 						{ type: "string", role: "tooltip" },
 						{ type: "number", label: "Total Deaths" },
@@ -43,7 +43,7 @@ export default {
 						return {c: [{v: key[1].country}, {v: key[1].totalCases}, {v: tooltip}, {v: key[1].totalDeaths}, {v: tooltip}]};
 					});
 
-					this.vm.dataPoints =  {...chartColumns, ...{ rows: dataPoints } };
+					this.vm.dataPoints = {...chartColumns, ...{ rows: dataPoints } };
 					this.vm.isDoneFetching = true;
 
 					helpers.timerEnd("fetchData->success", "chart.vue" );

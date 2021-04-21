@@ -18,22 +18,22 @@ const BarChart = () => {
 						success: function(response, status, jqXHR) {
 							helpers.timerStart("didMount->success", "chart.tsx" );
 
-							const chartColumns = [[
-								{ type: "string", id: "Country" },
+							const chartColumns = { cols: [
+								{ type: "string", label: "Country" },
 								{ type: "number", label: "Total Cases" },
 								{ type: "string", role: "tooltip" },
 								{ type: "number", label: "Total Deaths" },
 								{ type: "string", role: "tooltip" }
-							]];
-
+							]};
+		
 							const dataPoints = Object.entries(response).map(key => {
 								var tooltip = key[1].country + "\nTotal Cases: " + key[1].totalCases + "\nTotal Deaths: " + key[1].totalDeaths;
-								return [key[1].country, key[1].totalCases, tooltip, key[1].totalDeaths, tooltip];
+								return {c: [{v: key[1].country}, {v: key[1].totalCases}, {v: tooltip}, {v: key[1].totalDeaths}, {v: tooltip}]};
 							});
 							
 							component.setState({
 								dataLoadingStatus: "ready",
-								chartData: chartColumns.concat(dataPoints)
+								chartData: {...chartColumns, ...{ rows: dataPoints } }
 							});
 
 							helpers.timerEnd("didMount->success", "chart.tsx" );

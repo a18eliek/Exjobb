@@ -17,14 +17,19 @@ const GeoChart = () => {
 						success: function(response, status, jqXHR) {
 							helpers.timerStart("didMount->success", "geochart.tsx" );
 
-							const chartData = [["Country", "Total Cases", "Total Deaths"]];
+							const chartColumns = { cols: [
+								{ type: "string", label: "Country" },
+								{ type: "number", label: "Total Cases" },
+								{ type: "number", label: "Total Deaths" }
+							]};
+							
 							const dataPoints = Object.entries(response).map(key => {
-								return [key[1].country, key[1].totalCases, key[1].totalDeaths];
+								return {c: [{v: key[1].country}, {v: key[1].totalCases}, {v: key[1].totalDeaths}]};
 							});
 							
 							component.setState({
 								dataLoadingStatus: "ready",
-								chartData: chartData.concat(dataPoints)
+								chartData: {...chartColumns, ...{ rows: dataPoints } }
 							});
 
 							helpers.timerEnd("didMount->success", "geochart.tsx" );

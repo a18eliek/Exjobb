@@ -31,12 +31,17 @@ export default {
 				success: function(response) {
 					helpers.timerStart("fetchData->success", "geochart.vue" );
 
-					const chartData = [["Country", "Total Cases", "Total Deaths"]];
+					const chartColumns = { cols: [
+						{ type: "string", label: "Country" },
+						{ type: "number", label: "Total Cases" },
+						{ type: "number", label: "Total Deaths" }
+					]};
+					
 					const dataPoints = Object.entries(response).map(key => {
-						return [key[1].country, key[1].totalCases, key[1].totalDeaths];
+						return {c: [{v: key[1].country}, {v: key[1].totalCases}, {v: key[1].totalDeaths}]};
 					});
 
-					this.vm.dataPoints =  chartData.concat(dataPoints);
+					this.vm.dataPoints = {...chartColumns, ...{ rows: dataPoints } };
 			
 					this.vm.isDoneFetching = true;
 
