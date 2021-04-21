@@ -1,11 +1,13 @@
 <template>
-	<div>
-		<GChart
-			type="ColumnChart"
-			:data="chartData"
-			:options="chartOptions"
-			@ready="onChartReady"
-		/>
+	<div class="text-center">
+		<i v-if="!isDoneFetching" class="text-white fas fa-spinner fa-spin"></i>
+		<template v-if="isDoneFetching">
+			<GChart
+				type="ColumnChart"
+				:data="dataPoints"
+				:options="chartOptions"
+			/>
+		</template>
 	</div>
 </template>
 <script>
@@ -19,54 +21,54 @@ export default {
 		GChart
 	},
 	methods: {
-		onChartReady (chart, google) {
-			helpers.timerStart("onChartReady", "chart.vue" );
+		fetchData() {
 			$.ajax({
+				vm: this,
 				type: 'get',
 				url: '/data/',
 				dataType:"json",
-				success: function(response, status, jqXHR) {
-					helpers.timerStart("onChartReady->success", "chart.vue" );
-					/* Create the charts after operation succeeded */
-					var data = new google.visualization.DataTable(response);
-
-					data.addColumn('string', 'Country');
-					data.addColumn('number', 'Total Cases');
-					data.addColumn({type: 'string', role: 'tooltip'});
-					data.addColumn('number', 'Total Deaths');
-					data.addColumn({type: 'string', role: 'tooltip'});
+				success: function(response) {
+					helpers.timerStart("fetchData->success", "chart.vue" );
+					
+					const chartColumns = { cols: [
+						{ type: "string", id: "Country" },
+						{ type: "number", label: "Total Cases" },
+						{ type: "string", role: "tooltip" },
+						{ type: "number", label: "Total Deaths" },
+						{ type: "string", role: "tooltip" }
+					]};
 
 					const dataPoints = Object.entries(response).map(key => {
 						var tooltip = key[1].country + "\nTotal Cases: " + key[1].totalCases + "\nTotal Deaths: " + key[1].totalDeaths;
-						return [key[1].country, key[1].totalCases, tooltip, key[1].totalDeaths, tooltip];
+						return {c: [{v: key[1].country}, {v: key[1].totalCases}, {v: tooltip}, {v: key[1].totalDeaths}, {v: tooltip}]};
 					});
 
-					data.addRows(dataPoints);
+					this.vm.dataPoints =  {...chartColumns, ...{ rows: dataPoints } };
+					this.vm.isDoneFetching = true;
 
-					var options = {
-						isStacked: 'true',
-						legend: { position: 'top', alignment: 'start' }
-					};
-
-					chart.draw(data, options);
-					helpers.timerEnd("onChartReady->success", "chart.vue" );
+					helpers.timerEnd("fetchData->success", "chart.vue" );
 				}
 			});
-			helpers.timerEnd("onChartReady", "chart.vue" );
-		}
+		},
+	},
+	created() {
+		helpers.timerStart("fetchData", "chart.vue" );
+		this.fetchData();
+		helpers.timerEnd("fetchData", "chart.vue" );
 	},
 	data () {
 		return {
+			isDoneFetching: false,
+			dataPoints : null,
 			chartSettings: { 
 				mapsApiKey: process.env.MIX_GOOGLE_MAPS_API 
 			},
-			chartData: [
-				['Country', 'Value'], [0, 0]
-			],
+			chartData: this.dataPoints,
 			chartOptions: {
-				legend: { position: 'none'}
+				legend: { position: 'top'},
+				isStacked: 'true',
 			}
 		}
-  }
+  	}
 };
 </script>
