@@ -3,7 +3,6 @@ import * as React from "react";
 import { render } from "react-dom";
 import Component from "@reach/component-component";
  
-
 const BarChart = () => {
 	return (
 		<Component 
@@ -15,7 +14,7 @@ const BarChart = () => {
 						type: 'get',
 						url: '/data/',
 						dataType:"json",
-						success: function(response, status, jqXHR) {
+						success: function(response) {
 							helpers.timerStart("didMount->success", "chart.tsx" );
 
 							const chartColumns = { cols: [

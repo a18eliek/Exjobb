@@ -14,7 +14,7 @@ const GeoChart = () => {
 						type: 'get',
 						url: '/data/',
 						dataType:"json",
-						success: function(response, status, jqXHR) {
+						success: function(response) {
 							helpers.timerStart("didMount->success", "geochart.tsx" );
 
 							const chartColumns = { cols: [

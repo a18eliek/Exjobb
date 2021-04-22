@@ -25,7 +25,7 @@ Route::get('/update', function () {
 });
 
 /**
- *  Modifies the dataset provided by ECDC (https://opendata.ecdc.europa.eu/covid19/casedistribution/json)
+ *  Modifies the dataset provided by ECDC (https://opendata.ecdc.europa.eu/covid19/)
  *  Dataset will be in a much smaller state and will still contain the same information.
  *  ECDC's dataset does not contain daily information from before 01/03/2021 on some cases, 
  *  therefore there's a huge spike, this makes graphing the data daily at that date unhelpful for the enduser.
@@ -56,7 +56,7 @@ Route::get('/data/{country?}', function ($country = null) {
         }
     }
 
-    // Add the ICU soruces to the country info
+    // Add the ICU sources to the country info
     foreach($icu as $x) {
         if(isset($x->date)) {
             $data[$x->country]['icu'] = [
