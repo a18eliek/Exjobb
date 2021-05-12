@@ -6,6 +6,7 @@
 				type="ColumnChart"
 				:data="dataPoints"
 				:options="chartOptions"
+				@ready="onChartReady"
 			/>
 		</template>
 	</div>
@@ -29,6 +30,7 @@ export default {
 				dataType:"json",
 				success: function(response) {
 					helpers.timerStart("fetchData->success", "chart.vue" );
+					helpers.timerStart("rendering", "chart.vue" );
 					
 					const chartColumns = { cols: [
 						{ type: "string", label: "Country" },
@@ -49,6 +51,9 @@ export default {
 					helpers.timerEnd("fetchData->success", "chart.vue" );
 				}
 			});
+		},
+		onChartReady (chart, google) {
+			helpers.timerEnd("rendering", "chart.vue" );
 		},
 	},
 	created() {

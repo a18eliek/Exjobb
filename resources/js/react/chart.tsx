@@ -16,6 +16,7 @@ const BarChart = () => {
 						dataType:"json",
 						success: function(response) {
 							helpers.timerStart("didMount->success", "chart.tsx" );
+							helpers.timerStart("rendering", "chart.tsx" );
 
 							const chartColumns = { cols: [
 								{ type: "string", label: "Country" },
@@ -54,6 +55,16 @@ const BarChart = () => {
               				legend: { position: 'top', alignment: 'start' },
 							tooltip: { isHtml: false }
 						}}
+						chartEvents={
+							[ 
+								{
+									eventName: "ready",
+									callback: ({ chartWrapper, google }) => {
+										helpers.timerEnd("rendering", "chart.tsx" );
+									}
+								} 
+							]
+						}
 					/>
 					: <i className="fas fa-spinner fa-spin"></i>
 				}

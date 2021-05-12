@@ -16,6 +16,7 @@ const GeoChart = () => {
 						dataType:"json",
 						success: function(response) {
 							helpers.timerStart("didMount->success", "geochart.tsx" );
+							helpers.timerStart("rendering", "geochart.tsx" );
 
 							const chartColumns = { cols: [
 								{ type: "string", label: "Country" },
@@ -50,6 +51,16 @@ const GeoChart = () => {
 							title:"GeoChart",
 							region: "150"
 						}}
+						chartEvents={
+							[ 
+								{
+									eventName: "ready",
+									callback: ({ chartWrapper, google }) => {
+										helpers.timerEnd("rendering", "geochart.tsx" );
+									}
+								} 
+							]
+						}
 					/>
 					: <i className="fas fa-spinner fa-spin"></i>
 				}

@@ -7,6 +7,7 @@
 				type="GeoChart"
 				:data="dataPoints"
 				:options="chartOptions"
+				@ready="onChartReady"
 			/>
 		</template>
 	</div>
@@ -30,6 +31,7 @@ export default {
 				dataType:"json",
 				success: function(response) {
 					helpers.timerStart("fetchData->success", "geochart.vue" );
+					helpers.timerStart("rendering", "geochart.vue" );
 
 					const chartColumns = { cols: [
 						{ type: "string", label: "Country" },
@@ -49,6 +51,9 @@ export default {
 				}
 			});
 			
+		},
+		onChartReady (chart, google) {
+			helpers.timerEnd("rendering", "geochart.vue" );
 		},
 	},
 	created() {
