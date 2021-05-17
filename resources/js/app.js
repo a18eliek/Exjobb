@@ -44,10 +44,44 @@ helpers = {
             localStorage.setItem("autorefresh", false);
         }
 
-        if(localStorage.getItem("autorefresh") == "true") {
-            window.setTimeout(function () {
+        if (localStorage.getItem("pages") === null || localStorage.getItem("pages") == "[]") {
+            localStorage.setItem("pages", JSON.stringify(['/react/geochart', '/vue/geochart', '/react/barchart', '/vue/barchart']));
+        }
+
+        if (localStorage.getItem("maxitems") === null) {
+            localStorage.setItem("maxitems", 2500);
+        }
+        
+        if(func == "rendering" && localStorage.getItem("autorefresh") == "true") {
+            // Counter for number of page refreshes
+            if(localStorage.getItem(window.location.pathname) == null) {
+                localStorage.setItem(window.location.pathname, 0);
+            } else {
+                localStorage.setItem(window.location.pathname, (parseInt(localStorage.getItem(window.location.pathname))+1));
+            }
+            
+            // Move on to another graph
+            if(parseInt(localStorage.getItem(window.location.pathname)) >= parseInt(localStorage.getItem("maxitems"))) {
+                console.log(localStorage.getItem(window.location.pathname) + " is bigger than " + localStorage.getItem("maxitems"))
+                var pages = JSON.parse(localStorage.getItem("pages"));
+                
+                // Remove the current page from the list, so we can move on
+                pages = pages.filter(function(item) {
+                    return item !== window.location.pathname;
+                });
+                
+                localStorage.setItem("pages", JSON.stringify(pages));
+
+                if (pages === undefined || pages.length == 0) {
+                    alert("Datacollection is complete!");
+                    localStorage.setItem("autorefresh", "false");
+                } else {
+                    window.location.href = pages[0];
+                }
+                
+            } else {
                 window.location.reload();
-            }, 1000);
+            }            
         }
     
     },
