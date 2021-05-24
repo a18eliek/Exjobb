@@ -30,7 +30,7 @@ Route::get('/update', function () {
  *  ECDC's dataset does not contain daily information from before 01/03/2021 on some cases, 
  *  therefore there's a huge spike, this makes graphing the data daily at that date unhelpful for the enduser.
  */
-Route::get('/data/{country?}', function ($country = null) {
+Route::get('/data/{multipler?}', function ($multipler = 0) {
     if (App::environment('local')) {
         \Debugbar::disable();
     } 
@@ -92,9 +92,87 @@ Route::get('/data/{country?}', function ($country = null) {
 
     }
 
+    if($multipler > 0) {
+        foreach(array_keys($data) as $dp) {
+            for ($x = 1; $x <= ($multipler - 1); $x++) {
+                $data[$dp . $x] = $data[$dp];
+                $data[$dp . $x]['country'] = $dp . $x;
+                $data[$dp . $x]['geoId'] = $data[$dp . $x]['geoId'] . $x;
+                $data[$dp . $x]['code'] = $data[$dp . $x]['code'] . $x;
+            }
+        }
+    }
+
     // Sort the data based on total reported cases
     uasort($data, function ($x, $y) {
         return $y['totalCases'] - $x['totalCases'];
+    });
+
+    // Return the data as JSON
+    return response()->json($data);
+})->where(['multipler' => '[0-9]+']);
+
+
+Route::get('/dataww/{country?}', function ($country = null) {
+    if (App::environment('local')) {
+        \Debugbar::disable();
+    } 
+    
+    $data = [];
+    // Datasets from ECDC
+    $weekly = json_decode(file_get_contents('../storage/app/nationalcasedeath.json'));
+    $icu = json_decode(file_get_contents('../storage/app/hospitalicuadmissionrates.json'));
+
+    // Filter out totals
+    foreach($weekly as $key => $x) {
+        if(strpos($x->country, 'total') !== false) {
+            unset($weekly[$key]);
+        }
+    }
+
+    // Setup totals
+    foreach($weekly as $x) {
+        $data[$x->country] = [
+            'country'       => $x->country,
+            'geoId'         => null,
+            'code'          => $x->country_code,
+            'indicator'     => $x->indicator,
+            'cumulative'    => $x->cumulative_count,
+        ];
+    }
+    // Add the ICU sources to the country info
+    foreach($icu as $x) {
+        if(isset($x->date)) {
+            $data[$x->country]['icu'] = [
+                'source' => $x->source,
+                'url' => $x->url,
+            ];
+        }
+    }
+
+    // Store all data on ICU
+    $icuData = [];
+    foreach($icu as $x) {
+        if(isset($x->date)) {
+            if(isset($icuData[$x->country][date("Y-W", strtotime($x->date))])) {
+                $icuData[$x->country][date("Y-W", strtotime($x->date))] += $x->value;
+            } else {
+                $icuData[$x->country][date("Y-W", strtotime($x->date))] = $x->value;
+            }
+        }
+    }
+
+    // Process the weekly data and ICU data into the same dataset
+    foreach($weekly as $x) {
+        $data[$x->country]['weekly'][$x->year_week] = [
+            'cumulative'    => $x->cumulative_count,
+            'icu'           => isset($icuData[$x->country][$x->year_week]) ? $icuData[$x->country][$x->year_week] : null
+        ];
+    }
+
+    // Sort the data based on total reported cases
+    uasort($data, function ($x, $y) {
+        return $y['cumulative'] - $x['cumulative'];
     });
 
     // Processes the output whether or not we show one or all countries
